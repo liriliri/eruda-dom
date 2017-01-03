@@ -1,0 +1,5 @@
+module.exports = {
+    files: 'src/index.js',
+    output: 'src/util.js',
+    format: 'commonjs'
+};

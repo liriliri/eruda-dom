@@ -4,7 +4,8 @@
   "description": "Eruda plugin for navigating dom tree",
   "main": "eruda-dom.js",
   "scripts": {
-    "dev": "webpack-dev-server --host 0.0.0.0"
+    "dev": "webpack-dev-server --host 0.0.0.0",
+    "build": "webpack && webpack -p"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,13 @@
   },
   "homepage": "https://github.com/liriliri/eruda-dom#readme",
   "devDependencies": {
-    "eruda": "^1.2.0"
+    "autoprefixer": "^6.6.1",
+    "css-loader": "^0.26.1",
+    "eruda": "^1.2.0",
+    "postcss": "^5.2.8",
+    "postcss-class-prefix": "^0.3.0",
+    "postcss-loader": "^1.2.1",
+    "raw-loader": "^0.5.1",
+    "webpack": "^1.14.0"
   }
 }
