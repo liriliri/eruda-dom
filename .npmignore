@@ -1,0 +1,6 @@
+/.idea/
+/src/
+index.html
+webpack.config.js
+.gitignore
+.npmignore
