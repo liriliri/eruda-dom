@@ -9,20 +9,56 @@ module.exports = function (eruda)
         init: function ($el)
         {
             this._$el = $el;
+            this._isInit = false;
 
             erudaUtil.evalCss(require('./style.css'));
-
-            this._tpl = util.template(require('./template.tpl'));
         },
         show: function ()
         {
             this._$el.show();
 
-            this._render();
+            if (this._isInit) return;
+
+            this._initTree();
         },
-        _render: function ()
+        _initTree: function ()
         {
-            this._$el.html(this._tpl());
+            this._isInit = true;
+
+            this._$el.html(createEl(document.documentElement));
         }
     }
 };
+
+function createEl(el)
+{
+    var type = el.nodeType;
+
+    switch (type)
+    {
+        case 1: return createNode(el);
+        case 3: return createTextNode(el);
+        case 8: return createCmtNode(el);
+    }
+
+    return '';
+}
+
+function createNode(el)
+{
+    let {tagName, attributes} = el;
+
+    console.log(tagName, attributes);
+
+    return '';
+}
+
+function createTextNode(el)
+{
+    return '';
+}
+
+function createCmtNode(el)
+{
+    return '';
+}

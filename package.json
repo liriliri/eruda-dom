@@ -28,7 +28,6 @@
     "postcss": "^5.2.8",
     "postcss-class-prefix": "^0.3.0",
     "postcss-loader": "^1.2.1",
-    "raw-loader": "^0.5.1",
     "webpack": "^1.14.0"
   }
 }

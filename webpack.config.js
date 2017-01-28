@@ -26,10 +26,6 @@ var exports = {
             {
                 test: /\.css$/,
                 loaders: ['css', 'postcss']
-            },
-            {
-                test: /\.tpl$/,
-                loaders: ['raw']
             }
         ]
     },
