@@ -46,10 +46,6 @@ function createEl(el)
 
 function createNode(el)
 {
-    let {tagName, attributes} = el;
-
-    console.log(tagName, attributes);
-
     return '';
 }
 

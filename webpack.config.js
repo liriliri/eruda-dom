@@ -25,28 +25,32 @@ var exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loaders: ['css', 'postcss']
+                loaders: ['css-loader', {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: function ()
+                        {
+                            return [postcss.plugin('postcss-namespace', function ()
+                            {
+                                // Add '.dev-tools .tools ' to every selector.
+                                return function (root)
+                                {
+                                    root.walkRules(function (rule)
+                                    {
+                                        if (!rule.selectors) return rule;
+
+                                        rule.selectors = rule.selectors.map(function (selector)
+                                        {
+                                            return '.dev-tools .tools ' + selector;
+                                        });
+                                    });
+                                };
+                            }), classPrefix('eruda-'), autoprefixer];
+                        }
+                    }
+                }]
             }
         ]
-    },
-    postcss: function ()
-    {
-        return [postcss.plugin('postcss-namespace', function ()
-        {
-            // Add '.dev-tools .tools ' to every selector.
-            return function (root)
-            {
-                root.walkRules(function (rule)
-                {
-                    if (!rule.selectors) return rule;
-
-                    rule.selectors = rule.selectors.map(function (selector)
-                    {
-                        return '.dev-tools .tools ' + selector;
-                    });
-                });
-            };
-        }), classPrefix('eruda-'), autoprefixer];
     },
     plugins: [
         new webpack.BannerPlugin(banner)
