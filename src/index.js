@@ -1,60 +1,32 @@
-var util = require('./util');
-
-module.exports = function (eruda)
+module.exports = function (eruda) 
 {
-    var erudaUtil = eruda.util;
+    let {evalCss} = eruda.util;
 
-    return {
-        name: 'dom',
-        init: function ($el)
+    class Dom extends eruda.Tool {
+        constructor() {
+            super();
+            this.name = 'dom';
+            this._style = evalCss(require('./style.scss'));
+        }
+        init($el, container) 
         {
-            this._$el = $el;
-            this._isInit = false;
-
-            erudaUtil.evalCss(require('./style.css'));
-        },
-        show: function ()
+            super.init($el, container);
+            $el.html(require('./template.hbs')());
+        }
+        show() 
         {
-            this._$el.show();
-
-            if (this._isInit) return;
-
-            this._initTree();
-        },
-        _initTree: function ()
+            super.show();
+        }
+        hide()
         {
-            this._isInit = true;
-
-            this._$el.html(createEl(document.documentElement));
+            super.hide();
+        }
+        destroy() 
+        {
+            super.destroy();
+            evalCss.remove(this._style);
         }
     }
+
+    return new Dom();
 };
-
-function createEl(el)
-{
-    var type = el.nodeType;
-
-    switch (type)
-    {
-        case 1: return createNode(el);
-        case 3: return createTextNode(el);
-        case 8: return createCmtNode(el);
-    }
-
-    return '';
-}
-
-function createNode(el)
-{
-    return '';
-}
-
-function createTextNode(el)
-{
-    return '';
-}
-
-function createCmtNode(el)
-{
-    return '';
-}

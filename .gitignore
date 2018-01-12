@@ -1,4 +1,5 @@
-/.idea/
 /node_modules/
-eruda-dom.js
 eruda-dom.min.js
+eruda-dom.js
+eruda-dom.js.map
+package-lock.json

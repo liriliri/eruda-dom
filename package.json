@@ -1,34 +1,35 @@
 {
   "name": "eruda-dom",
-  "version": "0.0.1",
-  "description": "Eruda plugin for navigating dom tree",
+  "version": "1.0.0",
   "main": "eruda-dom.js",
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0",
-    "build": "webpack && webpack -p"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/liriliri/eruda-dom.git"
+    "build": "webpack && webpack -p",
+    "ci": "npm run lint && npm run build",
+    "lint": "eslint src/**/*.js"
   },
   "keywords": [
     "eruda",
-    "dom"
+    "plugin"
   ],
-  "author": "redhoodsu",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/liriliri/eruda-dom/issues"
-  },
-  "homepage": "https://github.com/liriliri/eruda-dom#readme",
+  "author": "",
   "devDependencies": {
-    "autoprefixer": "^6.6.1",
-    "css-loader": "^0.26.1",
-    "eruda": "^1.2.0",
-    "postcss": "^5.2.8",
+    "autoprefixer": "^7.2.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "eruda": "^1.4.0",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
+    "node-sass": "^4.7.2",
+    "postcss": "^6.0.14",
     "postcss-class-prefix": "^0.3.0",
-    "postcss-loader": "^1.2.1",
-    "update": "^0.7.4",
-    "webpack": "^2.2.1"
+    "postcss-loader": "^2.0.9",
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7",
+    "eslint": "^4.12.1"
   }
 }

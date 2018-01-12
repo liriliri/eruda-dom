@@ -8,7 +8,7 @@ var isProduction = process.argv.indexOf('-p') > -1,
     banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage;
 
 var exports = {
-    devtool: false,
+    devtool: 'source-map',
     entry: './src/index.js',
     devServer: {
         contentBase: './',
@@ -24,31 +24,50 @@ var exports = {
     module: {
         loaders: [
             {
-                test: /\.css$/,
-                loaders: ['css-loader', {
-                    loader: 'postcss-loader',
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
                     options: {
-                        plugins: function ()
-                        {
-                            return [postcss.plugin('postcss-namespace', function ()
-                            {
-                                // Add '.dev-tools .tools ' to every selector.
-                                return function (root)
-                                {
-                                    root.walkRules(function (rule)
-                                    {
-                                        if (!rule.selectors) return rule;
-
-                                        rule.selectors = rule.selectors.map(function (selector)
-                                        {
-                                            return '.dev-tools .tools ' + selector;
-                                        });
-                                    });
-                                };
-                            }), classPrefix('eruda-'), autoprefixer];
-                        }
+                        presets: ['env'],
+                        plugins: ['transform-runtime']
                     }
-                }]
+                }
+            },
+            {
+                test: /\.scss$/,
+                loaders: [ 
+                    'css-loader', 
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: function () 
+                            {
+                                return [postcss.plugin('postcss-namespace', function () 
+                                {
+                                    // Add '.dev-tools .tools ' to every selector.
+                                    return function (root) 
+                                    {
+                                        root.walkRules(function (rule) 
+                                        {
+                                            if (!rule.selectors) return rule;
+
+                                            rule.selectors = rule.selectors.map(function (selector) 
+                                            {
+                                                return '.dev-tools .tools ' + selector;
+                                            });
+                                        });
+                                    };
+                                }), classPrefix('eruda-'), autoprefixer];
+                            }
+                        }
+                    },
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.hbs$/,
+                loader: 'handlebars-loader'
             }
         ]
     },
@@ -57,8 +76,8 @@ var exports = {
     ]
 };
 
-if (isProduction)
-{
+if (isProduction) {
+    exports.devtool = false;
     exports.output.filename = 'eruda-dom.min.js';
     exports.plugins = exports.plugins.concat([
         new webpack.optimize.UglifyJsPlugin({
@@ -66,8 +85,7 @@ if (isProduction)
                 warnings: false
             },
             comments: /eruda-dom/
-        }),
-        new webpack.optimize.DedupePlugin()
+        })
     ]);
 }
 

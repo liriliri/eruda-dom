@@ -1,7 +1,7 @@
-/.idea/
 /src/
-index.html
-webpack.config.js
+.eslintrc.json
 .gitignore
 .npmignore
-.eustia
+.travis.yml
+index.html
+webpack.config.js
