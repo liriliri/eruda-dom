@@ -1,6 +1,6 @@
 # eruda-dom
 
-Eruda plugin for xxx.
+Eruda plugin for navigating dom tree.
 
 ## Demo
 
