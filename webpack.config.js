@@ -1,92 +1,89 @@
 var autoprefixer = require('autoprefixer'),
-    postcss = require('postcss'),
-    webpack = require('webpack'),
-    pkg = require('./package.json'),
-    classPrefix = require('postcss-class-prefix');
+  postcss = require('postcss'),
+  webpack = require('webpack'),
+  pkg = require('./package.json'),
+  classPrefix = require('postcss-class-prefix')
 
 var isProduction = process.argv.indexOf('-p') > -1,
-    banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage;
+  banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage
 
 var exports = {
-    devtool: 'source-map',
-    entry: './src/index.js',
-    devServer: {
-        contentBase: './',
-        port: 3000
-    },
-    output: {
-        path: __dirname,
-        filename: 'eruda-dom.js',
-        publicPath: "/assets/",
-        library: ['erudaDom'],
-        libraryTarget: 'umd'
-    },
-    module: {
+  devtool: 'source-map',
+  entry: './src/index.js',
+  devServer: {
+    contentBase: './',
+    port: 3000
+  },
+  output: {
+    path: __dirname,
+    filename: 'eruda-dom.js',
+    publicPath: '/assets/',
+    library: ['erudaDom'],
+    libraryTarget: 'umd'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+            plugins: ['transform-runtime']
+          }
+        }
+      },
+      {
+        test: /\.scss$/,
         loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env'],
-                        plugins: ['transform-runtime']
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function() {
+                return [
+                  postcss.plugin('postcss-namespace', function() {
+                    // Add '.dev-tools .tools ' to every selector.
+                    return function(root) {
+                      root.walkRules(function(rule) {
+                        if (!rule.selectors) return rule
+
+                        rule.selectors = rule.selectors.map(function(selector) {
+                          return '.dev-tools .tools ' + selector
+                        })
+                      })
                     }
-                }
-            },
-            {
-                test: /\.scss$/,
-                loaders: [ 
-                    'css-loader', 
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: function () 
-                            {
-                                return [postcss.plugin('postcss-namespace', function () 
-                                {
-                                    // Add '.dev-tools .tools ' to every selector.
-                                    return function (root) 
-                                    {
-                                        root.walkRules(function (rule) 
-                                        {
-                                            if (!rule.selectors) return rule;
-
-                                            rule.selectors = rule.selectors.map(function (selector) 
-                                            {
-                                                return '.dev-tools .tools ' + selector;
-                                            });
-                                        });
-                                    };
-                                }), classPrefix('eruda-'), autoprefixer];
-                            }
-                        }
-                    },
-                    'sass-loader'
+                  }),
+                  classPrefix('eruda-'),
+                  autoprefixer
                 ]
-            },
-            {
-                test: /\.hbs$/,
-                loader: 'handlebars-loader'
+              }
             }
+          },
+          'sass-loader'
         ]
-    },
-    plugins: [
-        new webpack.BannerPlugin(banner)
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader'
+      }
     ]
-};
-
-if (isProduction) {
-    exports.devtool = false;
-    exports.output.filename = 'eruda-dom.min.js';
-    exports.plugins = exports.plugins.concat([
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            comments: /eruda-dom/
-        })
-    ]);
+  },
+  plugins: [new webpack.BannerPlugin(banner)]
 }
 
-module.exports = exports;
+if (isProduction) {
+  exports.devtool = false
+  exports.output.filename = 'eruda-dom.min.js'
+  exports.plugins = exports.plugins.concat([
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      comments: /eruda-dom/
+    })
+  ])
+}
+
+module.exports = exports

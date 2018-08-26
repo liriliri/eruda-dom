@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack && webpack -p",
+    "format": "prettier src/index.js src/style.scss *.js --write",
     "ci": "npm run lint && npm run build",
     "lint": "eslint src/**/*.js"
   },
@@ -20,16 +21,17 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.7",
-    "eruda": "^1.4.0",
+    "eruda": "^1.5.2",
+    "eslint": "^4.12.1",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.6.0",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.14",
     "postcss-class-prefix": "^0.3.0",
     "postcss-loader": "^2.0.9",
+    "prettier": "^1.14.2",
     "sass-loader": "^6.0.6",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
-    "eslint": "^4.12.1"
+    "webpack-dev-server": "^2.9.7"
   }
 }
