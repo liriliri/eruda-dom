@@ -1,0 +1,18 @@
+<span class="eruda-html-tag">{{!
+  }}&lt;{{!
+  }}<span class="eruda-tag-name">{{tagName}}</span>{{!
+  }}{{#each attributes}}
+    <span class="eruda-attribute">
+      <span class="eruda-attribute-name">{{name}}</span>="<span class="eruda-attribute-value">{{value}}</span>"{{!
+    }}</span>{{!
+  }}{{/each}}{{!
+  }}&gt;{{!
+}}</span>{{!
+}}{{#if hasTail}}{{!
+}}{{#if text}}{{text}}{{else}}…{{/if}}{{!
+}}<span class="eruda-html-tag">{{!
+  }}&lt;{{!
+  }}<span class="eruda-tag-name">/{{tagName}}</span>{{!
+  }}&gt;{{!
+}}</span>
+{{/if}}

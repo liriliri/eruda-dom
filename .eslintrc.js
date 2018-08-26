@@ -4,9 +4,10 @@ module.exports = {
     es6: true,
     commonjs: true
   },
-  extends: 'eslint:recommended',
+  extends: 'standard',
   rules: {
-    quotes: ['error', 'single']
+    quotes: ['error', 'single'],
+    'space-before-function-paren': 'off'
   },
   parserOptions: {
     sourceType: 'module'

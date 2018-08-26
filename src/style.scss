@@ -1,8 +1,34 @@
+@mixin overflow-auto($direction: 'both') {
+  @if $direction == 'both' {
+    overflow: auto;
+  } @else {
+    overflow-#{$direction}: auto;
+  }
+  -webkit-overflow-scrolling: touch;
+}
+
 .dom {
-  padding: 10px;
-  .tip {
+  .dom-tree {
+    @include overflow-auto();
     padding: 10px;
-    background: #fff;
-    color: #263238;
+    font-size: 12px;
+    font-family: Consolas, Lucida Console, Courier New, monospace;
+    .tree-item {
+      .html-tag {
+        color: rgb(168, 148, 166);
+        .tag-name {
+          color: rgb(136, 18, 128);
+        }
+        .attribute-name {
+          color: rgb(153, 69, 0);
+        }
+        .attribute-value {
+          color: rgb(26, 26, 166);
+        }
+      }
+    }
+    .children {
+      padding-left: 12px;
+    }
   }
 }
