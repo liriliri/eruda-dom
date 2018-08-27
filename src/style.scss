@@ -10,10 +10,12 @@
 .dom {
   .dom-tree {
     @include overflow-auto();
-    padding: 10px;
+    padding: 10px 10px 10px 25px;
     font-size: 12px;
-    font-family: Consolas, Lucida Console, Courier New, monospace;
+    height: 100%;
+    font-family: Consolas, Lucida Console, Monaco, MonoSpace;
     .tree-item {
+      position: relative;
       .html-tag {
         color: rgb(168, 148, 166);
         .tag-name {
@@ -26,9 +28,25 @@
           color: rgb(26, 26, 166);
         }
       }
+      &.expandable:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        position: absolute;
+        border-left-color: #707d8b;
+        left: -10px;
+        top: 4px;
+      }
+      &.expandable.expanded:before {
+        border-top-color: #707d8b;
+        border-left-color: transparent;
+        left: -12px;
+        top: 6px;
+      }
     }
     .children {
-      padding-left: 12px;
+      padding-left: 15px;
     }
   }
 }

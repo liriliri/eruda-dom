@@ -71,7 +71,7 @@ module.exports = function(eruda) {
         }
         $tag.html(this._htmlTagTpl(data))
         if (expandable && !hasOneTextNode) {
-          $tag.addClass('expandable')
+          $tag.addClass('eruda-expandable')
         }
       } else if (child.nodeType === child.TEXT_NODE) {
         const value = child.nodeValue
@@ -89,9 +89,9 @@ module.exports = function(eruda) {
       $children.addClass('eruda-children')
 
       $tag.on('click', () => {
-        if (!$tag.hasClass('expandable')) return
+        if (!$tag.hasClass('eruda-expandable')) return
 
-        if ($tag.hasClass('expanded')) {
+        if ($tag.hasClass('eruda-expanded')) {
           $children.html('')
           $tag.html(
             this._htmlTagTpl({
@@ -99,7 +99,7 @@ module.exports = function(eruda) {
               hasTail: true
             })
           )
-          $tag.rmClass('expanded')
+          $tag.rmClass('eruda-expanded')
         } else {
           $tag.html(
             this._htmlTagTpl({
@@ -107,7 +107,7 @@ module.exports = function(eruda) {
               hasTail: false
             })
           )
-          $tag.addClass('expanded')
+          $tag.addClass('eruda-expanded')
           this._renderChildren(child, $children)
         }
       })
