@@ -76,14 +76,6 @@ var exports = {
 if (isProduction) {
   exports.devtool = false
   exports.output.filename = 'eruda-dom.min.js'
-  exports.plugins = exports.plugins.concat([
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      comments: /eruda-dom/
-    })
-  ])
 }
 
 module.exports = exports

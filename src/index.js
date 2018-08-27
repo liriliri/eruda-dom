@@ -10,6 +10,7 @@ module.exports = function(eruda) {
       this._htmlEl = document.documentElement
       this._htmlTagTpl = require('./htmlTag.hbs')
       this._textNodeTpl = require('./textNode.hbs')
+      this._htmlCommentTpl = require('./htmlComment.hbs')
     }
     init($el, container) {
       super.init($el, container)
@@ -79,7 +80,16 @@ module.exports = function(eruda) {
 
         $tag.html(
           this._textNodeTpl({
-            value: child.nodeValue
+            value
+          })
+        )
+      } else if (child.nodeType === child.COMMENT_NODE) {
+        const value = child.nodeValue
+        if (value.trim() === '') return
+
+        $tag.html(
+          this._htmlCommentTpl({
+            value
           })
         )
       } else {

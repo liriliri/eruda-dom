@@ -28,6 +28,9 @@
           color: rgb(26, 26, 166);
         }
       }
+      .html-comment {
+        color: rgb(35, 110, 37);
+      }
       &.expandable:before {
         content: '';
         width: 0;
