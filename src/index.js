@@ -1,5 +1,5 @@
 module.exports = function(eruda) {
-  let { evalCss, each, $ } = eruda.util
+  let { evalCss, each, $, toArr } = eruda.util
 
   class Dom extends eruda.Tool {
     constructor() {
@@ -13,7 +13,8 @@ module.exports = function(eruda) {
       this._htmlCommentTpl = require('./htmlComment.hbs')
     }
     init($el, container) {
-      super.init($el, container)
+      super.init($el)
+      this._container = container
       $el.html(require('./template.hbs')())
       this._$domTree = $el.find('.eruda-dom-tree')
     }
@@ -29,6 +30,12 @@ module.exports = function(eruda) {
       super.destroy()
       evalCss.remove(this._style)
     }
+    _setElement(node) {
+      const elements = this._container.get('elements')
+      if (!elements) return
+
+      elements.set(node)
+    }
     _initTree() {
       this._isInit = true
 
@@ -39,20 +46,18 @@ module.exports = function(eruda) {
       if (!node) {
         children = [this._htmlEl]
       } else {
-        children = node.childNodes
+        children = toArr(node.childNodes)
       }
 
       const container = $container.get(0)
 
-      each(children, child => this._renderChild(child, container))
       if (node) {
-        const $tag = createEl('li')
-        $tag.addClass('eruda-tree-item')
-        $tag.html(
-          `<span class="eruda-html-tag" style="margin-left: -12px;">&lt;<span class="eruda-tag-name">/${node.tagName.toLocaleLowerCase()}</span>&gt;</span>`
-        )
-        container.appendChild($tag.get(0))
+        children.push({
+          nodeType: 'END_TAG',
+          node
+        })
       }
+      each(children, child => this._renderChild(child, container))
     }
     _renderChild(child, container) {
       const $tag = createEl('li')
@@ -92,38 +97,51 @@ module.exports = function(eruda) {
             value
           })
         )
+      } else if (child.nodeType === 'END_TAG') {
+        child = child.node
+        $tag.html(
+          `<span class="eruda-html-tag" style="margin-left: -12px;">&lt;<span class="eruda-tag-name">/${child.tagName.toLocaleLowerCase()}</span>&gt;</span><span class="eruda-selection"></span>`
+        )
       } else {
         return
       }
       const $children = createEl('ul')
       $children.addClass('eruda-children')
 
-      $tag.on('click', () => {
-        if (!$tag.hasClass('eruda-expandable')) return
-
-        if ($tag.hasClass('eruda-expanded')) {
-          $children.html('')
-          $tag.html(
-            this._htmlTagTpl({
-              ...getHtmlTagData(child),
-              hasTail: true
-            })
-          )
-          $tag.rmClass('eruda-expanded')
-        } else {
-          $tag.html(
-            this._htmlTagTpl({
-              ...getHtmlTagData(child),
-              hasTail: false
-            })
-          )
-          $tag.addClass('eruda-expanded')
-          this._renderChildren(child, $children)
-        }
-      })
-
       container.appendChild($tag.get(0))
       container.appendChild($children.get(0))
+
+      if (child.nodeType !== child.ELEMENT_NODE) return
+
+      if ($tag.hasClass('eruda-expandable')) {
+        $tag.on('click', '.eruda-toggle-btn', e => {
+          e.stopPropagation()
+          if ($tag.hasClass('eruda-expanded')) {
+            $children.html('')
+            $tag.html(
+              this._htmlTagTpl({
+                ...getHtmlTagData(child),
+                hasTail: true
+              })
+            )
+            $tag.rmClass('eruda-expanded')
+          } else {
+            $tag.html(
+              this._htmlTagTpl({
+                ...getHtmlTagData(child),
+                hasTail: false
+              })
+            )
+            $tag.addClass('eruda-expanded')
+            this._renderChildren(child, $children)
+          }
+        })
+      }
+      $tag.on('click', () => {
+        this._$el.find('.eruda-selected').rmClass('eruda-selected')
+        $tag.addClass('eruda-selected')
+        this._setElement(child)
+      })
     }
   }
 

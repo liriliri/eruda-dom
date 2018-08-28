@@ -2,6 +2,7 @@ src/
 .eslintrc.js
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
 index.html
 prettier.config.js

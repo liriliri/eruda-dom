@@ -9,13 +9,50 @@
 
 .dom {
   .dom-tree {
-    @include overflow-auto();
+    @include overflow-auto(y);
+    overflow-x: hidden;
+    word-wrap: break-word;
     padding: 10px 10px 10px 25px;
     font-size: 12px;
     height: 100%;
     font-family: Consolas, Lucida Console, Monaco, MonoSpace;
     .tree-item {
       position: relative;
+      z-index: 10;
+      .toggle-btn {
+        position: absolute;
+        display: block;
+        width: 12px;
+        height: 12px;
+        left: -12px;
+        top: 2px;
+      }
+      .selection {
+        position: absolute;
+        display: none;
+        left: -10000px;
+        right: -10000px;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        background: #2196f3;
+      }
+      &.selected {
+        color: #fff !important;
+        span {
+          color: #fff !important;
+        }
+        &.expandable:before {
+          border-left-color: #fff;
+        }
+        &.expandable.expanded:before {
+          border-top-color: #fff;
+          border-left-color: transparent;
+        }
+        .selection {
+          display: block;
+        }
+      }
       .html-tag {
         color: rgb(168, 148, 166);
         .tag-name {
