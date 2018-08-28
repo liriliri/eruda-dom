@@ -7,7 +7,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+$blue: #2196f3;
+$blue-dark: #1565c0;
+
 .dom {
+  padding-bottom: 40px;
   .dom-tree {
     @include overflow-auto(y);
     overflow-x: hidden;
@@ -16,6 +20,9 @@
     font-size: 12px;
     height: 100%;
     font-family: Consolas, Lucida Console, Monaco, MonoSpace;
+    & * {
+      user-select: text;
+    }
     .tree-item {
       position: relative;
       z-index: 10;
@@ -87,6 +94,24 @@
     }
     .children {
       padding-left: 15px;
+    }
+  }
+  .inspect {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: #fff;
+    width: 100%;
+    background: $blue;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 10px;
+    transition: background 0.3s;
+    &:active {
+      background: $blue-dark;
     }
   }
 }
