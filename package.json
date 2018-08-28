@@ -2,6 +2,7 @@
   "name": "eruda-dom",
   "version": "1.0.0",
   "main": "eruda-dom.js",
+  "description": "Eruda plugin for navigating dom tree",
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack && webpack -p",
@@ -9,11 +10,21 @@
     "ci": "npm run lint && npm run build",
     "lint": "eslint src/**/*.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liriliri/eruda-dom.git"
+  },
   "keywords": [
     "eruda",
-    "plugin"
+    "plugin",
+    "dom"
   ],
-  "author": "",
+  "author": "redhoodsu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liriliri/eruda-dom/issues"
+  },
+  "homepage": "https://github.com/liriliri/eruda-dom#readme",
   "devDependencies": {
     "autoprefixer": "^7.2.2",
     "babel-core": "^6.26.3",
