@@ -20,6 +20,7 @@ $blue-dark: #1565c0;
     font-size: 12px;
     height: 100%;
     font-family: Consolas, Lucida Console, Monaco, MonoSpace;
+    cursor: default;
     & * {
       user-select: text;
     }
