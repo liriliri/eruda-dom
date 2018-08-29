@@ -25,6 +25,8 @@ $blue-dark: #1565c0;
       user-select: text;
     }
     .tree-item {
+      line-height: 16px;
+      min-height: 16px;
       position: relative;
       z-index: 10;
       .toggle-btn {
