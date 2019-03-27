@@ -201,9 +201,36 @@ module.exports = function(eruda) {
     const ret = {}
 
     ret.tagName = el.tagName.toLocaleLowerCase()
-    ret.attributes = el.attributes
+    const attributes = []
+    each(el.attributes, attribute => {
+      const { name, value } = attribute
+      attributes.push({
+        name,
+        value,
+        underline: isUrlAttribute(el, name)
+      })
+    })
+    ret.attributes = attributes
 
     return ret
+  }
+
+  function isUrlAttribute(el, name) {
+    const tagName = el.tagName
+    if (
+      tagName === 'SCRIPT' ||
+      tagName === 'IMAGE' ||
+      tagName === 'VIDEO' ||
+      tagName === 'AUDIO'
+    ) {
+      if (name === 'src') return true
+    }
+
+    if (tagName === 'LINK') {
+      if (name === 'href') return true
+    }
+
+    return false
   }
 
   function createEl(name) {

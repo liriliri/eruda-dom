@@ -4,7 +4,7 @@
   }}<span class="eruda-tag-name">{{tagName}}</span>{{!
   }}{{#each attributes}}
     <span class="eruda-attribute">
-      <span class="eruda-attribute-name">{{name}}</span>="<span class="eruda-attribute-value">{{value}}</span>"{{!
+      <span class="eruda-attribute-name">{{name}}</span>{{#if value}}="<span class="eruda-attribute-value{{#if underline}} eruda-attribute-underline{{/if}}">{{value}}</span>"{{/if}}{{!
     }}</span>{{!
   }}{{/each}}{{!
   }}&gt;{{!
