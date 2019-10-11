@@ -1,6 +1,6 @@
 {
   "name": "eruda-dom",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "eruda-dom.js",
   "description": "Eruda plugin for navigating dom tree",
   "scripts": {
