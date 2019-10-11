@@ -1,11 +1,10 @@
-var autoprefixer = require('autoprefixer'),
-  postcss = require('postcss'),
-  webpack = require('webpack'),
-  pkg = require('./package.json'),
-  classPrefix = require('postcss-class-prefix')
+const autoprefixer = require('autoprefixer')
+const postcss = require('postcss')
+const webpack = require('webpack')
+const pkg = require('./package.json')
+const classPrefix = require('postcss-class-prefix')
 
-var isProduction = process.argv.indexOf('-p') > -1,
-  banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage
+const banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage
 
 var exports = {
   devtool: 'source-map',
@@ -71,11 +70,6 @@ var exports = {
     ]
   },
   plugins: [new webpack.BannerPlugin(banner)]
-}
-
-if (isProduction) {
-  exports.devtool = false
-  exports.output.filename = 'eruda-dom.min.js'
 }
 
 module.exports = exports

@@ -11,6 +11,10 @@ module.exports = function(eruda) {
       this._textNodeTpl = require('./textNode.hbs')
       this._selectedEl = document.documentElement
       this._htmlCommentTpl = require('./htmlComment.hbs')
+      this._elementChangeHandler = el => {
+        if (this._selectedEl === el) return
+        this.select(el)
+      }
     }
     init($el, container) {
       super.init($el)
@@ -37,8 +41,12 @@ module.exports = function(eruda) {
       }
       while (els.length > 0) {
         el = els.shift()
-        if (el.erudaDom) {
-          el.erudaDom.open()
+        const erudaDom = el.erudaDom
+        if (erudaDom) {
+          if (erudaDom.close && erudaDom.open) {
+            erudaDom.close()
+            erudaDom.open()
+          }
         } else {
           break
         }
@@ -50,13 +58,22 @@ module.exports = function(eruda) {
     destroy() {
       super.destroy()
       evalCss.remove(this._style)
+      const elements = this._container.get('elements')
+      if (elements) {
+        elements.off('change', this._elementChangeHandler)
+      }
     }
     _bindEvent() {
       const container = this._container
 
+      const elements = container.get('elements')
+      if (elements) {
+        elements.on('change', this._elementChangeHandler)
+      }
+
       this._$el.on('click', '.eruda-inspect', () => {
         this._setElement(this._selectedEl)
-        if (container.get('elements')) container.showTool('elements')
+        if (elements) container.showTool('elements')
       })
     }
     _setElement(el) {
