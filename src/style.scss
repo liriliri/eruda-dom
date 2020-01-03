@@ -7,9 +7,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-$blue: #2196f3;
-$blue-dark: #1565c0;
-
 .dom {
   padding-bottom: 40px;
   .dom-tree {
@@ -45,18 +42,10 @@ $blue-dark: #1565c0;
         top: 0;
         bottom: 0;
         z-index: -1;
-        background: #2196f3;
+        background: var(--contrast);
       }
       &.selected {
-        color: #fff !important;
-        span {
-          color: #fff !important;
-        }
-        &.expandable:before {
-          border-left-color: #fff;
-        }
         &.expandable.expanded:before {
-          border-top-color: #fff;
           border-left-color: transparent;
         }
         .selection {
@@ -64,22 +53,22 @@ $blue-dark: #1565c0;
         }
       }
       .html-tag {
-        color: rgb(168, 148, 166);
+        color: var(--tag-name-color);
         .tag-name {
-          color: rgb(136, 18, 128);
+          color: var(--tag-name-color);
         }
         .attribute-name {
-          color: rgb(153, 69, 0);
+          color: var(--attribute-name-color);
         }
         .attribute-value {
-          color: rgb(26, 26, 166);
+          color: var(--string-color);
           &.attribute-underline {
             text-decoration: underline;
           }
         }
       }
       .html-comment {
-        color: rgb(35, 110, 37);
+        color: var(--comment-color);
       }
       &.expandable:before {
         content: '';
@@ -87,12 +76,12 @@ $blue-dark: #1565c0;
         height: 0;
         border: 4px solid transparent;
         position: absolute;
-        border-left-color: #707d8b;
+        border-left-color: var(--foreground);
         left: -10px;
         top: 4px;
       }
       &.expandable.expanded:before {
-        border-top-color: #707d8b;
+        border-top-color: var(--foreground);
         border-left-color: transparent;
         left: -12px;
         top: 6px;
@@ -106,9 +95,10 @@ $blue-dark: #1565c0;
     position: absolute;
     left: 0;
     bottom: 0;
-    color: #fff;
+    color: var(--foreground);
+    border-top: 1px solid var(--border);
     width: 100%;
-    background: $blue;
+    background: var(--darker-background);
     display: block;
     height: 40px;
     line-height: 40px;
@@ -117,7 +107,7 @@ $blue-dark: #1565c0;
     margin-top: 10px;
     transition: background 0.3s;
     &:active {
-      background: $blue-dark;
+      color: var(--select-foreground);
     }
   }
 }

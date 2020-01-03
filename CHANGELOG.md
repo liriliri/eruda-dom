@@ -1,3 +1,7 @@
+## v2.0.0 (3 Jan 2019)
+
+* feat: theme support
+
 ## v1.1.0 (11 Oct 2019)
 
 * feat: in sync with elements panel [#1](https://github.com/liriliri/eruda-dom/issues/1)
