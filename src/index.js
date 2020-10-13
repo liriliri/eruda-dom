@@ -93,7 +93,7 @@ module.exports = function(eruda) {
       if (!node) {
         children = [document.documentElement]
       } else {
-        children = toArr(node.childNodes)
+        children = (node.shadowRoot) ? toArr(node.shadowRoot.childNodes) : toArr(node.childNodes);
       }
 
       const container = $container.get(0)
