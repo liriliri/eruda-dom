@@ -93,7 +93,7 @@ module.exports = function(eruda) {
       if (!node) {
         children = [document.documentElement]
       } else {
-        children = toArr(node.childNodes)
+        children = (node.shadowRoot) ? toArr(node.shadowRoot.childNodes) : toArr(node.childNodes)
       }
 
       const container = $container.get(0)
@@ -112,14 +112,13 @@ module.exports = function(eruda) {
 
       $tag.addClass('eruda-tree-item')
       if (child.nodeType === child.ELEMENT_NODE) {
-        const childCount = child.childNodes.length
-        const expandable = childCount > 0
+        const childCount = (child.shadowRoot) ? child.shadowRoot.childNodes.length : child.childNodes.length;
+        const expandable = childCount > 0;
         const data = {
           ...getHtmlTagData(child),
           hasTail: expandable
         }
-        const hasOneTextNode =
-          childCount === 1 && child.childNodes[0].nodeType === child.TEXT_NODE
+        const hasOneTextNode = childCount === 1 && ((child.shadowRoot) ? child.shadowRoot.childNodes[0].nodeType : child.childNodes[0].nodeType) === child.TEXT_NODE;
         if (hasOneTextNode) {
           data.text = child.childNodes[0].nodeValue
         }
